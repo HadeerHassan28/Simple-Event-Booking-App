@@ -1,28 +1,33 @@
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignUpScreen from "../screens/auth/SignUpScreen";
-import EventListScreen from "../screens/events/EventListScreen";
-import EventDetailScreen from "../screens/events/EventDetailScreen";
-import DashboardScreen from "../screens/dashboard/DashboardScreen";
 import StartScreen from "../screens/auth/StartScreen";
+import BottomTabs from "./BottomTabs";
+import EventDetailScreen from "../screens/events/EventDetailScreen";
+import { useAuthStore } from "../store/authStore";
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Start"
-    >
-      {/* auth */}
-      <Stack.Screen name="Start" component={StartScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignUpScreen} />
+  const { user } = useAuthStore();
 
-      {/* main */}
-      <Stack.Screen name="Events" component={EventListScreen} />
-      <Stack.Screen name="EventDetails" component={EventDetailScreen} />
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {!user ? (
+        <>
+          <Stack.Screen name="Start" component={StartScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignUpScreen} />
+        </>
+      ) : (
+        <>
+          {/* Main app with Bottom Tabs */}
+          <Stack.Screen name="Main" component={BottomTabs} />
+          {/* Subscreens like EventDetails */}
+          <Stack.Screen name="EventDetails" component={EventDetailScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };

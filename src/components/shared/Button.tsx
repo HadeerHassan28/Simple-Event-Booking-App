@@ -7,6 +7,7 @@ interface Props {
   title: string;
   onPress: () => void;
   style?: string;
+  disable?: any;
 }
 
 export default function Button({ title, onPress, style = "" }: Props) {
