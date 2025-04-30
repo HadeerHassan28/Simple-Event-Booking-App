@@ -9,7 +9,7 @@ import Button from "../../components/shared/Button";
 
 type RootStackParamList = {
   Signup: undefined;
-  Dashboard: undefined;
+  Main: undefined;
 };
 
 const LoginScreen = () => {
@@ -65,7 +65,7 @@ const LoginScreen = () => {
             console.log("LoginScreen", user);
 
             if (user) {
-              navigation.navigate("Dashboard");
+              navigation.navigate("Main");
             }
           }}
           disable={isLoading}

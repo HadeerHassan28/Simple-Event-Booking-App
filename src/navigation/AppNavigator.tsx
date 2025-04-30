@@ -6,6 +6,7 @@ import StartScreen from "../screens/auth/StartScreen";
 import BottomTabs from "./BottomTabs";
 import EventDetailScreen from "../screens/events/EventDetailScreen";
 import { useAuthStore } from "../store/authStore";
+import DashboardScreen from "../screens/dashboard/DashboardScreen";
 
 const Stack = createNativeStackNavigator();
 

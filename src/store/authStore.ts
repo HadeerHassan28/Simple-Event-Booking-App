@@ -21,7 +21,6 @@ export const useAuthStore = create<AuthStore>((set: any) => ({
     set({ isLoading: true, error: null });
     try {
       const user = await loginApi(name, password);
-      console.log("login store", user);
 
       if (!user) {
         set({ error: "Invalid email or password", isLoading: false });

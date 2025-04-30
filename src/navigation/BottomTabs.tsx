@@ -13,7 +13,7 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: "#1E1E1E",
           borderTopWidth: 0,
           elevation: 5,
         },
