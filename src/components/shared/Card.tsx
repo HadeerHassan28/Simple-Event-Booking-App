@@ -1,16 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from "react-native";
 import tw from "../../utils/tailwind";
 import { Event } from "../../types/events";
 
 interface CardProps {
   data: Event;
+  onPress: (event: GestureResponderEvent) => void;
 }
 
-const Card: React.FC<CardProps> = ({ data }) => {
+const Card: React.FC<CardProps> = ({ data, onPress }) => {
   return (
-    <View
+    <TouchableOpacity
       style={tw`bg-text rounded-lg shadow-md p-4 m-2 w-2/3 flex flex-col text-background gap-3`}
+      onPress={onPress}
     >
       <Text style={tw`text-bold text-xl`}>{data.name}</Text>
 
@@ -32,7 +41,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           })}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

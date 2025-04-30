@@ -1,22 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { View, Text, ActivityIndicator, FlatList } from "react-native";
 import { useEventsStore } from "../../store/eventStrore";
 
 import Card from "../../components/shared/Card";
 import tw from "../../utils/tailwind";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { Event } from "../../types/events";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+export type RootStackParamList = {
+  EventList: undefined;
+  EventDetails: { event: Event };
+};
 
 const EventListScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { events, isLoading, getEvent } = useEventsStore();
-  console.log(events);
 
   useEffect(() => {
     getEvent();
@@ -39,7 +38,12 @@ const EventListScreen = () => {
         keyExtractor={(item: any) => item.id.toString()}
         renderItem={({ item }: any) => (
           <View style={tw`flex flex-col items-center`}>
-            <Card data={item} />
+            <Card
+              data={item}
+              onPress={() =>
+                navigation.navigate("EventDetails", { event: item })
+              }
+            />
           </View>
         )}
       />

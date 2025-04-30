@@ -46,7 +46,7 @@ const SignUpScreen = () => {
 
       <Button
         title={isLoading ? "Signing Up..." : "Sign Up"}
-        onPress={() => signup(email, password, name)}
+        onPress={() => signup(name, password)}
         disable={isLoading}
       />
 
