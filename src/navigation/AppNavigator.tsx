@@ -26,7 +26,11 @@ const AppNavigator = () => {
           {/* Main app with Bottom Tabs */}
           <Stack.Screen name="Main" component={BottomTabs} />
           {/* Subscreens like EventDetails */}
-          <Stack.Screen name="EventDetails" component={EventDetailScreen} />
+          <Stack.Screen
+            name="EventDetails"
+            component={EventDetailScreen}
+            options={{ title: "Event Details" }}
+          />
         </>
       )}
     </Stack.Navigator>

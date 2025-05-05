@@ -1,5 +1,6 @@
 import axios from "axios";
 import Constants from "expo-constants";
+import { Event } from "../types/events";
 
 const API_URL = Constants.expoConfig?.extra?.MOCK_API_URL;
 
@@ -27,8 +28,19 @@ export const signupApi = async (name: string, password: string) => {
       name,
       password,
     });
-    return response.data; // Returns user info
+    return response.data;
   } catch (error) {
     throw new Error("Signup failed");
+  }
+};
+
+export const postUserEventApi = async (userId: string, event: Event) => {
+  try {
+    const response = await axios.post(`${API_URL}/user/user/${userId}`, {
+      event,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Post event failed");
   }
 };

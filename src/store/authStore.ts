@@ -1,14 +1,17 @@
 import { create } from "zustand";
-import { loginApi, signupApi } from "../services/authService";
+import { loginApi, postUserEventApi, signupApi } from "../services/authService";
+import { Event } from "../types/events";
+import { User } from "../types/user";
 
 interface AuthStore {
-  user: { id: string; email: string; name: string } | null;
+  user: User | null;
   token: string | null;
   isLoading: boolean;
   error: string | null;
   login: (name: string, password: string) => Promise<void>;
   signup: (name: string, password: string) => Promise<void>;
   logout: () => void;
+  getUserEvents: (userId: string, userEvent: Event) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>((set: any) => ({
@@ -16,6 +19,7 @@ export const useAuthStore = create<AuthStore>((set: any) => ({
   token: null,
   isLoading: false,
   error: null,
+  userEvents: [],
 
   login: async (name: string, password: string) => {
     set({ isLoading: true, error: null });
@@ -47,5 +51,15 @@ export const useAuthStore = create<AuthStore>((set: any) => ({
   },
   logout: () => {
     set({ user: null, token: null });
+  },
+
+  getUserEvents: async (userId: string, userEvent: Event) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await postUserEventApi(userId, userEvent);
+      set({ userEvents: response.data, isLoading: false });
+    } catch (error: any) {
+      set({ error: error.message, isLoading: false });
+    }
   },
 }));

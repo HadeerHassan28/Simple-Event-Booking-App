@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  StyleSheet,
   View,
   Text,
   Image,
@@ -12,21 +11,26 @@ import { Event } from "../../types/events";
 
 interface CardProps {
   data: Event;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
+  singlePage?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ data, onPress }) => {
+const Card: React.FC<CardProps> = ({ data, onPress, singlePage }) => {
+  const handleRegister = () => {};
   return (
     <TouchableOpacity
-      style={tw`bg-text rounded-lg shadow-md p-4 m-2 w-2/3 flex flex-col text-background gap-3`}
-      onPress={onPress}
+      style={tw`bg-text rounded-lg shadow-md p-2 my-2 mx-1 w-2/3 flex flex-col text-background gap-3 `}
+      onPressIn={!singlePage ? (event) => onPress?.(event) : undefined}
     >
+      {/* name */}
       <Text style={tw`text-bold text-xl`}>{data.name}</Text>
 
+      {/* location */}
       <Text style={tw`text-sm text-gray-800`}>{data.location}</Text>
+      {/* Image */}
       <Image
         source={{ uri: data.image }}
-        style={tw`w-full h-15 rounded-lg mb-4`}
+        style={[tw`w-full rounded-lg mb-4`, singlePage ? tw`h-1/3` : tw`h-15`]}
       />
       {/* Date + Price */}
       <View style={tw`flex flex-row justify-between`}>
@@ -41,6 +45,38 @@ const Card: React.FC<CardProps> = ({ data, onPress }) => {
           })}
         </Text>
       </View>
+      {/* Speakers */}
+      {singlePage && (
+        <Text style={tw`text-sm text-background`}>
+          Speakers: {data.speakers}
+        </Text>
+      )}
+
+      {/* Capacity */}
+      {singlePage && (
+        <Text style={tw`text-sm text-background`}>
+          Capacity: {data.capacity}
+        </Text>
+      )}
+
+      {/* Available Spots */}
+      {singlePage && (
+        <Text style={tw`text-sm text-background`}>
+          Available Spots: {data.spots}
+        </Text>
+      )}
+
+      {/* Regeter btn */}
+      {singlePage && (
+        <TouchableOpacity
+          style={tw`bg-primary rounded-lg p-2`}
+          onPress={() => {
+            handleRegister;
+          }}
+        >
+          <Text style={tw`text-text text-center`}>Register</Text>
+        </TouchableOpacity>
+      )}
     </TouchableOpacity>
   );
 };
