@@ -1,8 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import DashboardScreen from "../screens/dashboard/DashboardScreen";
 import EventListScreen from "../screens/events/EventListScreen";
+import StartScreen from "../screens/auth/StartScreen";
 
 const Tab = createBottomTabNavigator();
 

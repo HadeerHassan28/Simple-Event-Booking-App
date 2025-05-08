@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 import tw from "../../utils/tailwind";
 import Card from "../../components/shared/Card";
 
@@ -32,7 +32,5 @@ const EventDetailScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default EventDetailScreen;

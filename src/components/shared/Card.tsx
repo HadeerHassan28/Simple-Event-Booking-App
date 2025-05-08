@@ -5,9 +5,14 @@ import {
   Image,
   TouchableOpacity,
   GestureResponderEvent,
+  Pressable,
 } from "react-native";
 import tw from "../../utils/tailwind";
 import { Event } from "../../types/events";
+import { useNavigation } from "@react-navigation/native";
+import { useAuthStore } from "../../store/authStore";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../screens/events/EventListScreen";
 
 interface CardProps {
   data: Event;
@@ -16,14 +21,24 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ data, onPress, singlePage }) => {
-  const handleRegister = () => {};
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { getUserEvents, user } = useAuthStore();
+  const handleRegister = async () => {
+    if (user) {
+      const response = await getUserEvents(user, data);
+
+      if (response !== undefined && response !== null)
+        navigation.navigate("EventList");
+    }
+  };
   return (
     <TouchableOpacity
       style={tw`bg-text rounded-lg shadow-md p-2 my-2 mx-1 w-2/3 flex flex-col text-background gap-3 `}
       onPressIn={!singlePage ? (event) => onPress?.(event) : undefined}
     >
       {/* name */}
-      <Text style={tw`text-bold text-xl`}>{data.name}</Text>
+      <Text style={tw` text-xl`}>{data.name}</Text>
 
       {/* location */}
       <Text style={tw`text-sm text-gray-800`}>{data.location}</Text>
@@ -70,9 +85,7 @@ const Card: React.FC<CardProps> = ({ data, onPress, singlePage }) => {
       {singlePage && (
         <TouchableOpacity
           style={tw`bg-primary rounded-lg p-2`}
-          onPress={() => {
-            handleRegister;
-          }}
+          onPress={handleRegister}
         >
           <Text style={tw`text-text text-center`}>Register</Text>
         </TouchableOpacity>

@@ -31,6 +31,16 @@ const AppNavigator = () => {
             component={EventDetailScreen}
             options={{ title: "Event Details" }}
           />
+          <Stack.Screen
+            name="EventList"
+            component={EventDetailScreen}
+            options={{ title: "EventList" }}
+          />
+          <Stack.Screen
+            name="Dashboard"
+            component={DashboardScreen}
+            options={{ title: "EventList" }}
+          />
         </>
       )}
     </Stack.Navigator>

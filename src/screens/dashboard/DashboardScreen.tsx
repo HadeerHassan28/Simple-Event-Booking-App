@@ -4,34 +4,39 @@ import tw from "../../utils/tailwind";
 import { useAuthStore } from "../../store/authStore";
 import Card from "../../components/shared/Card";
 import { Event } from "../../types/events";
+import Button from "../../components/shared/Button";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../events/EventListScreen";
 
 const DashboardScreen = () => {
-  const { user } = useAuthStore((state) => ({
-    user: state.user,
-    token: state.token,
-    isLoading: state.isLoading,
-    error: state.error,
-  }));
+  const user = useAuthStore((state) => state.user);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <View style={tw`flex-1 items-center justify-center bg-background`}>
-      <Text style={tw`text-2xl font-bold text-primary`}>
+    <View style={tw`flex-1 items-center justify-start bg-background `}>
+      <Text style={tw`text-2xl font-bold text-primary p-5`}>
         Welcome to the Dashboard
       </Text>
-      <View>
-        {user?.event ? (
-          <View>
-            {user.event.map((event: any) => (
+      {/* Events */}
+      <View style={tw`w-full items-center justify-center flex gap-6`}>
+        {user?.event?.length ? (
+          <View style={tw`  w-full`}>
+            {user?.event.map((event: any) => (
               <View
                 key={event.id}
-                style={tw`p-4 bg-white rounded-lg shadow-md`}
+                style={tw`p-4 bg-background rounded-lg shadow-md w-full`}
               >
                 <Card data={event} />
               </View>
             ))}
           </View>
         ) : (
-          <View>
-            <Text>There is no event </Text>
+          <View style={tw` items-center justify-center flex gap-6`}>
+            <Text style={tw`text-xl text-text text-center mt-6`}>
+              There is no event
+            </Text>
           </View>
         )}
       </View>

@@ -11,7 +11,7 @@ interface AuthStore {
   login: (name: string, password: string) => Promise<void>;
   signup: (name: string, password: string) => Promise<void>;
   logout: () => void;
-  getUserEvents: (userId: string, userEvent: Event) => Promise<void>;
+  getUserEvents: (user: User, userEvent: Event) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>((set: any) => ({
@@ -53,11 +53,13 @@ export const useAuthStore = create<AuthStore>((set: any) => ({
     set({ user: null, token: null });
   },
 
-  getUserEvents: async (userId: string, userEvent: Event) => {
+  getUserEvents: async (user: User, userEvent: Event) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await postUserEventApi(userId, userEvent);
-      set({ userEvents: response.data, isLoading: false });
+      const response = await postUserEventApi(user, userEvent);
+      set({ userEvents: response, isLoading: false });
+
+      return response;
     } catch (error: any) {
       set({ error: error.message, isLoading: false });
     }
